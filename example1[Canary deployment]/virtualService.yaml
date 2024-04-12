@@ -1,0 +1,35 @@
+kind: VirtualService
+apiVersion: networking.istio.io/v1alpha3
+metadata:
+  name: web-service
+  namespace: istio-demo
+spec:
+  hosts:      
+    - "*"
+  gateways:
+    - web-gateway 
+  http:
+    - route:
+      - destination:
+          host: web-service
+          subset: v1
+        weight: 90
+      - destination:
+          host: web-service
+          subset: v2
+        weight: 10
+---
+kind: DestinationRule
+apiVersion: networking.istio.io/v1alpha3
+metadata:
+  name: web-service
+  namespace: istio-demo
+spec:
+  host: web-service
+  subsets:
+    - labels:
+        version: v1
+      name: v1
+    - labels:
+        version: v2
+      name: v2

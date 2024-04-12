@@ -1,0 +1,31 @@
+kind: VirtualService
+apiVersion: networking.istio.io/v1alpha3
+metadata:
+  name: web-service
+  namespace: istio-demo
+spec:
+  hosts:      
+    - "*"
+  gateways:
+    - web-gateway
+  http:
+    - route:
+      - destination:
+         host: web-service
+         subset: all-version
+---
+kind: DestinationRule
+apiVersion: networking.istio.io/v1alpha3
+metadata:
+  name: web-service
+  namespace: istio-demo
+spec:
+  host: web-service
+  trafficPolicy:
+    loadBalancer:
+      consistentHash:
+        httpHeaderName: "myVal"
+  subsets:
+    - labels:
+        app: httpd
+      name: all-version
