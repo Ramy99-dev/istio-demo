@@ -2,7 +2,7 @@ kind: VirtualService
 apiVersion: networking.istio.io/v1alpha3
 metadata:
   name: web-service
-  namespace: test-ns
+  namespace: istio-demo
 spec:
   hosts:      
     - "*"
@@ -11,7 +11,7 @@ spec:
   http:
     - match:
       - uri:  
-          prefix: "/microservice1"
+          prefix: "/version1"
       rewrite:
           uri: /
       route: 
@@ -20,13 +20,13 @@ spec:
           subset: v1
     - match:
       - uri :
-          prefix: "/microservice2"
+          prefix: "/version2"
       rewrite:
           uri: /
       route:
       - destination:
           host: web-service
-          subset: v1
+          subset: v2
 ---
 kind: DestinationRule
 apiVersion: networking.istio.io/v1alpha3

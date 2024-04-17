@@ -5,6 +5,7 @@ metadata:
     app: httpd
     version: v1
   name: httpd-v1
+  namespace: istio-demo
 spec:
   containers:
   - image: httpd
@@ -18,7 +19,7 @@ spec:
   - command:
     - sh
     - -c
-    - mkdir /usr/local/apache2/htdocs;( echo '<html> <body> <h1>Hello Virtual Cluster!</h1>
+    - mkdir /usr/local/apache2/htdocs;( echo '<html> <body> <h1>This is version V1!</h1>
       </body></html>' ) > /usr/local/apache2/htdocs/index.html
     image: busybox
     name: busybox
